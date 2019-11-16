@@ -76,9 +76,7 @@ class Solution {
     }
     
     public void getDigit(int row, int col, int rows,int cols, char[][] board){
-       if(row<0 || col <0 || row >=rows ||col >=cols){
-            return;
-        }              
+                  
         int T6 = getDigit1(row+1,col,rows,cols,board);
         int T1 = getDigit1(row+1,col+1,rows,cols,board);
         int T2 =getDigit1(row+1,col-1,rows,cols,board);
