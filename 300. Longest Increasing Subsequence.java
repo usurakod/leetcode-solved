@@ -8,11 +8,6 @@ Output: 4
 Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
 ******************************************************************************************************************************/
 
-
-
-
-
-
 class Solution {
     public int lengthOfLIS(int[] nums) {
         if(nums.length == 0){return 0;}
