@@ -1,0 +1,79 @@
+/* Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+
+
+ 
+
+Example 1:
+
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+Example 2:
+
+Input: digits = ""
+Output: []
+Example 3:
+
+Input: digits = "2"
+Output: ["a","b","c"]
+*/
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        if(digits == null || digits.length() == 0){
+            return new ArrayList<>();
+        }
+        
+        HashMap<Character, String> map = new HashMap<>();
+        map.put('1', "");
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5',"jkl");
+        map.put('6', "mno");
+        map.put('7',"pqrs");
+        map.put('8',"tuv");
+        map.put('9',"wxyz");
+        map.put('0',"");
+        
+        char[]  buffer = new char[digits.length()];
+    
+        List<String> result = new ArrayList<>();
+        getAllCombinations(digits, buffer, 0,0, map, result);
+
+        return result;
+    }
+    
+    
+    public void getAllCombinations(String digits, char[] buffer, int startIdx, int bufferIdx, HashMap<Character, String> map, List<String> result){
+        if(buffer.length == bufferIdx || digits.length() == startIdx ){
+            //digits.length() == startIdx this is for if 3211 is given then start index will reach at the end though buffer not
+            
+            printCombos(buffer, bufferIdx, result);
+            return;
+        }
+        
+        Character test = digits.charAt(startIdx);
+       char[] letters =  map.get(digits.charAt(startIdx)).toCharArray();
+        if(letters.length == 0){
+            getAllCombinations(digits, buffer, startIdx+1, bufferIdx, map, result);
+        }
+        
+        for(char letter: letters){
+            buffer[bufferIdx] = letter;
+            
+            getAllCombinations(digits, buffer, startIdx+1, bufferIdx+1, map, result);
+        }
+    }
+    
+    public List<String> printCombos(char[] buffer, int bufferIdx,List<String> result){
+        StringBuilder sb = new StringBuilder();
+        for( int i=0; i<bufferIdx;i++){
+            sb.append(buffer[i]);
+        }
+         result.add(sb.toString());
+        return result;
+    }
+}
