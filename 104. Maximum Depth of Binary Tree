@@ -1,0 +1,54 @@
+/*
+
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+ 
+
+Example 1:
+
+
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+Example 2:
+
+Input: root = [1,null,2]
+Output: 2
+Example 3:
+
+Input: root = []
+Output: 0
+Example 4:
+
+Input: root = [0]
+Output: 1
+*/
+
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int[] result = new int[1]; //using int array as int is immutable
+        
+        findMaxHeight(root, 0, result);
+        return result[0];
+        
+    }
+    
+    public  void findMaxHeight(TreeNode root, int prevDepth, int[] maxDepth){
+        if(root == null){
+            return;
+        }
+        
+        int currentDepth = prevDepth+1;
+        if(currentDepth > maxDepth[0]){
+            maxDepth[0] = currentDepth;
+        }
+        
+        findMaxHeight(root.left, currentDepth, maxDepth);
+        findMaxHeight(root.right, currentDepth, maxDepth);
+
+    }
+}
