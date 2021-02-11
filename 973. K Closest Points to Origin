@@ -54,3 +54,30 @@ public int[][] getKClosest(int[][] points, int K){
             return (nums[0]*nums[0] + nums[1]*nums[1]);
         }
 }
+
+
+
+Other solution:
+
+class Solution {
+    public int[][] kClosest(int[][] points, int K) {
+        
+        int[][] result = getKClosest(points, K);
+        
+        return result;
+    }
+    
+    
+public int[][] getKClosest(int[][] points, int K){
+        
+ Arrays.sort(points, (a, b) -> {
+            return (distanceToOrigin(a) - distanceToOrigin(b)) ;
+ });
+    
+    return Arrays.copyOf(points,  K);
+}
+    
+     public int distanceToOrigin(int[] nums){
+            return (nums[0]*nums[0] + nums[1]*nums[1]);
+        }
+}
