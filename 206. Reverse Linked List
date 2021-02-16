@@ -1,0 +1,28 @@
+/*
+Reverse a singly linked list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL. */
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        
+        ListNode curr = head;
+        if(head == null){
+            return head;
+        }
+        
+        
+        while(curr.next != null){
+            ListNode next = curr.next;
+            curr.next = next.next;
+            next.next = head;
+            head = next;
+            }
+        
+        return head;
+        }
+    
+}
