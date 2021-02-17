@@ -1,0 +1,69 @@
+/*
+Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+
+Notice that the solution set must not contain duplicate quadruplets.
+
+ 
+
+Example 1:
+
+Input: nums = [1,0,-1,0,-2,2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+Example 2:
+
+Input: nums = [], target = 0
+Output: [] */
+
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res= new ArrayList<>();
+        
+        int size = nums.length;
+        Arrays.sort(nums);
+        for(int i=0;i< size;++i){
+            for(int j=i+1; j< size; j++){
+                
+                int left = j+1;
+                int right = size-1;
+                
+                while(left < right){
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+
+                    if(sum == target){
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[left]);
+                        list.add(nums[right]);
+                        res.add(list);
+                        
+                        //for duplicates check and moving next if there are
+                       int leftVal = nums[left];
+                        while(left< size && nums[left] == leftVal){
+                            ++left;
+                        }
+                        
+                        int rightVal = nums[right];
+                        while(right > left && nums[right] == rightVal){
+                            --right;
+                        }
+                    }
+                    else if(sum < target){
+                        ++left;
+                    }
+                    else{
+                        --right;
+                    }
+                    
+                }                
+                while(j+1< size && nums[j+1] == nums[j]){
+                    ++j;
+                }
+            }            
+            while (i+1< size && nums[i+1] == nums[i]){
+                ++i;
+            }
+        }
+        return res;
+    }
+}
