@@ -1,0 +1,53 @@
+/* Given a string S, check if the letters can be rearranged so that two characters that are adjacent to each other are not the same.
+
+If possible, output any possible result.  If not possible, return the empty string.
+
+Example 1:
+
+Input: S = "aab"
+Output: "aba"
+Example 2:
+
+Input: S = "aaab"
+Output: ""
+*/
+
+class Solution {
+    public String reorganizeString(String S) {
+        
+     int N = S.length();
+        int[] count = new int[26];
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char c: S.toCharArray()) count[c-'a']++;
+        PriorityQueue<Character> pq = new PriorityQueue<Character>((a, b) ->
+            map.get(a) == map.get(b) ? a - b : map.get(b) - map.get(a));
+
+        for (int i = 0; i < 26; ++i) 
+        if (count[i] > 0) {
+            if (count[i] > (N + 1) / 2) return "";
+            map.put( (char) ('a' + i), count[i]);
+            pq.add( (char) ('a' + i));
+        }
+
+        StringBuilder ans = new StringBuilder();
+        while (pq.size() >= 2) {
+            
+            Character mc1 = pq.poll();
+            Character mc2 = pq.poll();
+            
+            ans.append(mc1);
+            ans.append(mc2);
+            
+            map.put(mc1, map.get(mc1)-1);
+            int count1 =map.get(mc1);
+             map.put(mc2, map.get(mc2)-1);
+            int count2 =map.get(mc2);
+
+            if (count1 > 0) pq.add(mc1);
+            if (count2 > 0) pq.add(mc2);
+            }
+        
+        if (pq.size() > 0) ans.append(pq.poll());
+        return ans.toString();
+    }
+}
