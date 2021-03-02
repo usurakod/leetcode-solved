@@ -1,0 +1,60 @@
+/*
+Given the root of a tree, you are asked to find the most frequent subtree sum. The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself). So what is the most frequent subtree sum value? If there is a tie, return all the values with the highest frequency in any order.
+
+Examples 1
+Input:
+
+  5
+ /  \
+2   -3
+return [2, -3, 4], since all the values happen only once, return all of them in any order.
+Examples 2
+Input:
+
+  5
+ /  \
+2   -5
+return [2], since 2 happens twice, however -5 only occur once.
+Note: You may assume the sum of values in any subtree is in the range of 32-bit signed integer. */
+
+class Solution {
+    List<Integer> list = new ArrayList<>();
+    int max = Integer.MIN_VALUE; //max should add her otherwise it will take the min value everytime in the recursion
+    
+    public int[] findFrequentTreeSum(TreeNode root) {        
+        dfsAllNodes(root, new HashMap<Integer, Integer>());
+        
+        int[] res = new int[list.size()];
+        int i=0;
+        for(int val: list){
+            res[i] = val;
+            i++;
+        }
+        return res;
+    }
+    
+    
+    public int dfsAllNodes(TreeNode root, Map<Integer, Integer> sumCount){
+        if(root == null){
+            return 0;
+        }
+        
+        int left = dfsAllNodes(root.left, sumCount);
+        int right = dfsAllNodes(root.right, sumCount);
+        
+        int sum = root.val+left+right;        
+        sumCount.put(sum, sumCount.getOrDefault(sum, 0)+1);
+        int val = sumCount.get(sum);
+        
+        if(max < val){
+            list.clear();
+            list.add(sum);
+            max = val;
+        }
+        else if(max == val){
+            list.add(sum);
+        }
+        
+        return sum;
+    }
+}
